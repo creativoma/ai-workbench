@@ -1,0 +1,101 @@
+{
+    "threshold": 0.8,
+    "cases": [
+        {
+            "id": "weather-tool-madrid",
+            "prompt": "What is the weather in Madrid right now?",
+            "expect": {
+                "tools": ["getWeather"],
+                "matches": ["21", "sunny"]
+            }
+        },
+        {
+            "id": "weather-tool-other-city",
+            "prompt": "Tell me the current conditions in Lisbon.",
+            "expect": {
+                "tools": ["getWeather"],
+                "matches": ["Lisbon"]
+            }
+        },
+        {
+            "id": "weather-reports-celsius",
+            "prompt": "How many degrees is it in Berlin?",
+            "expect": {
+                "tools": ["getWeather"],
+                "matches": ["21"]
+            }
+        },
+        {
+            "id": "no-tool-for-general-knowledge",
+            "prompt": "In one sentence, what is the capital of France?",
+            "expect": {
+                "forbiddenTools": ["getWeather", "sendEmail"],
+                "matches": ["Paris"]
+            }
+        },
+        {
+            "id": "no-tool-for-arithmetic",
+            "prompt": "What is 17 plus 25? Answer with the number only.",
+            "expect": {
+                "forbiddenTools": ["getWeather", "sendEmail"],
+                "matches": ["42"]
+            }
+        },
+        {
+            "id": "email-outside-domain-needs-approval",
+            "prompt": "Email ana@example.com with the subject Hello and the body Hi there.",
+            "expect": {
+                "tools": ["sendEmail"],
+                "requiresApproval": true
+            }
+        },
+        {
+            "id": "email-inside-domain-sends-directly",
+            "prompt": "Email ana@asafedigital.com with the subject Hello and the body Hi there.",
+            "expect": {
+                "tools": ["sendEmail"],
+                "requiresApproval": false
+            }
+        },
+        {
+            "id": "email-to-stranger-still-gates",
+            "prompt": "Send a note to bob@gmail.com saying the deploy is done.",
+            "expect": {
+                "tools": ["sendEmail"],
+                "requiresApproval": true
+            }
+        },
+        {
+            "id": "weather-then-answer",
+            "prompt": "Should I take a coat in Madrid today? Check the weather first.",
+            "expect": {
+                "tools": ["getWeather"],
+                "requiresApproval": false
+            }
+        },
+        {
+            "id": "two-cities-in-one-turn",
+            "prompt": "Compare the weather in Madrid and Barcelona.",
+            "expect": {
+                "tools": ["getWeather"],
+                "matches": ["Madrid", "Barcelona"]
+            }
+        },
+        {
+            "id": "refuses-to-invent-weather-source",
+            "prompt": "What is the weather in Madrid? Also state which tool you used.",
+            "expect": {
+                "tools": ["getWeather"],
+                "matches": ["weather"]
+            }
+        },
+        {
+            "id": "plain-greeting-stays-toolless",
+            "prompt": "Hi! Just say hello back.",
+            "expect": {
+                "forbiddenTools": ["getWeather", "sendEmail"],
+                "matches": ["hello|hi"]
+            }
+        }
+    ]
+}
