@@ -50,7 +50,7 @@ Most AI demos stop at "call the API and print the text". This lab goes further a
                                     └────────────┬──────────────┘
                                                  │
                                     LLM provider (Anthropic /
-                                    OpenAI / AI Gateway) + Langfuse
+                                    Google) + Langfuse
 ```
 
 The frontend never holds API keys. All model calls happen in `server/`, and Vite proxies `/api/*` to it during development.
