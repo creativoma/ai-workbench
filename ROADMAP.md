@@ -211,14 +211,17 @@ return result.toTextStreamResponse()
 
 `useObject` takes an `api` URL rather than a transport, so `PlanPanel` accepts an optional `fetch` for tests (`src/components/plan/test-support.ts` has the stream fakes).
 
-## Phase 5 — Observability with Langfuse — done (unverified against a live project)
+## Phase 5 — Observability with Langfuse — done
 
 - [x] Install `@langfuse/client @langfuse/vercel-ai-sdk @langfuse/tracing @langfuse/otel @opentelemetry/sdk-node`
 - [x] Register the `LangfuseSpanProcessor` — lives in `server/observability/langfuse.ts`
 - [x] Tag traces with session metadata; inspect latency, cost and token usage per generation
 - [x] Add a thumbs-up / thumbs-down feedback control in the UI wired to Langfuse scores
 
-**Not verified against a live project.** The wiring, the port and the feedback round-trip are covered by tests, but nobody has yet opened a Langfuse dashboard and confirmed traces land there. That is the one open item in this phase.
+Verified against a live Langfuse project on 2026-08-17. A multi-step weather run
+lands as `AGENT invoke_agent` wrapping `step 1` / `step 2` spans plus a `TOOL
+getWeather` observation, token counts attach to the generation, and rating the
+answer adds a `user-feedback` score to that same trace.
 
 Routes depend on an `Observability` port (`server/observability/index.ts`), not on Langfuse. Two payoffs: the app runs untraced when the keys are absent instead of crashing, and route tests assert on what _would_ have been reported via `recordingObservability`.
 
@@ -337,13 +340,6 @@ config from the environment, and CI already gates lint, types, tests, E2E and
 the build. Two things to remember when it happens — the rate limiter is
 per-process, so more than one API instance needs a shared store behind the same
 `consume`; and add the three origin-dependent SEO tags listed in README.
-
-**Verifying Langfuse against a live project.** Needs Langfuse keys, which only
-the repo owner has. The wiring, the `Observability` port and the feedback
-round-trip are covered by tests, and the app runs untraced without keys — but no
-one has opened a dashboard and watched a trace land. Set the keys in `.env` and
-send one message: traces should appear grouped by session, with a
-`user-feedback` score once you rate an answer.
 
 **Dark mode, the user bubble's line clamp, and per-token syntax highlighting.**
 Recorded in [DESIGN.md](./DESIGN.md) §12 with reasons. Dark mode was out of
