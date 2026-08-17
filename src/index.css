@@ -1,0 +1,193 @@
+@import 'tailwindcss';
+
+/* Self-hosted so there is no runtime dependency on a font CDN. */
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/jetbrains-mono';
+
+/* Tokens per DESIGN.md §2. Tailwind v4 generates the utilities from these
+   (bg-surface-2, text-ink-500, rounded-xl, shadow-lg) — there is no config
+   file. Components must use these names, never raw hex or gray-*, so a later
+   dark block can override values without touching a single component. */
+@theme {
+    /* ── Type ─────────────────────────────────────────────────── */
+    --font-sans:
+        'Inter Variable', 'Inter', ui-sans-serif, system-ui, -apple-system,
+        'Segoe UI', sans-serif;
+    --font-mono:
+        'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace,
+        SFMono-Regular, Menlo, monospace;
+
+    /* ── Brand ────────────────────────────────────────────────── */
+    --color-brand-50: #fef3ee;
+    --color-brand-100: #fde4d8;
+    --color-brand-200: #fbc7b0;
+    --color-brand-300: #f8a17d;
+    --color-brand-400: #f4744a;
+    --color-brand-500: #f0511e; /* new chat, mic, logo, active glyphs */
+    --color-brand-600: #d8410f; /* hover */
+    --color-brand-700: #b4340b; /* pressed */
+
+    /* ── Ink (text) ───────────────────────────────────────────── */
+    --color-ink-950: #101010; /* headings, strong */
+    --color-ink-900: #1c1c1c; /* body, list items */
+    --color-ink-700: #3d3d3d; /* prose, history items */
+    --color-ink-500: #6b6b6b; /* secondary, links */
+    --color-ink-400: #8e8e8e; /* icons + decorative only — see §9 */
+    --color-ink-300: #b4b4b4; /* disabled */
+
+    /* ── Surfaces ─────────────────────────────────────────────── */
+    --color-surface-0: #ffffff; /* sidebar, cards, composer */
+    --color-surface-1: #fafafa; /* icon rail */
+    --color-surface-2: #f6f6f6; /* canvas, hover fills */
+    --color-surface-3: #ededed; /* page behind the app */
+
+    /* ── Lines ────────────────────────────────────────────────── */
+    --color-line-100: #f0f0f0; /* in-card dividers */
+    --color-line-200: #e7e7e7; /* default border */
+    --color-line-300: #dcdcdc; /* button border */
+
+    /* ── Accent tints ─────────────────────────────────────────── */
+    --color-tint-lilac: #f1eefc; /* active rail item */
+    --color-tint-peach: #fdebe2; /* active segmented toggle */
+
+    /* ── Syntax ───────────────────────────────────────────────── */
+    --color-code-plain: #24292f;
+    --color-code-tag: #d93025; /* tags, CSS properties */
+    --color-code-attr: #1a7f37; /* attribute names, strings */
+    --color-code-value: #e36209; /* numbers, literals */
+    --color-code-punct: #6b6b6b;
+
+    /* ── Radii ────────────────────────────────────────────────── */
+    --radius-sm: 8px;
+    --radius-md: 10px; /* buttons, nav rows */
+    --radius-lg: 14px; /* code card */
+    --radius-xl: 16px; /* bubble, composer */
+    --radius-2xl: 20px; /* canvas */
+
+    /* ── Elevation ────────────────────────────────────────────── */
+    --shadow-xs: 0 1px 2px rgb(0 0 0 / 0.04);
+    --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.05), 0 1px 3px rgb(0 0 0 / 0.04);
+    --shadow-md: 0 2px 6px rgb(0 0 0 / 0.06), 0 1px 2px rgb(0 0 0 / 0.04);
+    --shadow-lg: 0 8px 24px -6px rgb(0 0 0 / 0.1), 0 2px 6px rgb(0 0 0 / 0.05);
+
+    /* ── Motion ───────────────────────────────────────────────── */
+    --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+    html {
+        /* §8: the app owns the viewport; only inner tracks scroll. */
+        height: 100%;
+    }
+
+    body {
+        height: 100%;
+        margin: 0;
+        background: var(--color-surface-3);
+        color: var(--color-ink-900);
+        font-family: var(--font-sans);
+        font-size: 15px;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    #root {
+        height: 100%;
+    }
+
+    /* §9: never remove the focus ring; :focus-visible only. */
+    :focus-visible {
+        outline: 2px solid var(--color-brand-500);
+        outline-offset: 2px;
+    }
+
+    button {
+        font: inherit;
+        color: inherit;
+    }
+
+    /* §6: 6px track, thumb #D4D4D4, thin. */
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: #d4d4d4 transparent;
+    }
+
+    *::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+
+    *::-webkit-scrollbar-thumb {
+        background: #d4d4d4;
+        border-radius: 9999px;
+    }
+
+    *::-webkit-scrollbar-track {
+        background: transparent;
+    }
+}
+
+@layer components {
+    /* §6 scroll fade: the conversation dissolves into the canvas behind the
+       floating composer. Canvas-level overlay, not card styling. z-index sits
+       below the composer's z-10 so the composer stays crisp. */
+    .canvas::after {
+        content: '';
+        position: absolute;
+        inset-inline: 0;
+        bottom: 0;
+        z-index: 5;
+        height: 160px;
+        pointer-events: none;
+        background: linear-gradient(
+            to top,
+            var(--color-surface-2) 45%,
+            transparent 100%
+        );
+    }
+}
+
+@layer utilities {
+    /* §9: 44px targets on coarse pointers without changing the visual box. */
+    @media (pointer: coarse) {
+        .touch-target::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+        }
+    }
+
+    /* §6: streaming caret. §7: motion is opt-in, never forced. */
+    .caret::after {
+        content: '';
+        display: inline-block;
+        width: 2px;
+        height: 1em;
+        margin-left: 2px;
+        vertical-align: text-bottom;
+        background: var(--color-brand-500);
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+        .caret::after {
+            animation: caret-blink 1s step-end infinite;
+        }
+
+        .message-enter {
+            animation: message-enter 180ms var(--ease-out-quint) both;
+        }
+    }
+
+    @keyframes caret-blink {
+        50% {
+            opacity: 0;
+        }
+    }
+
+    @keyframes message-enter {
+        from {
+            opacity: 0;
+            transform: translateY(6px);
+        }
+    }
+}
