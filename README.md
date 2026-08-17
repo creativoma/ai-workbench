@@ -4,6 +4,11 @@
 
 **Status:** All seven phases are built, plus the UI in [DESIGN.md](./DESIGN.md). Not deployed — see [Out of scope](./ROADMAP.md#out-of-scope) for what is deliberately not being built and why.
 
+![AI Workbench — the empty state: icon rail, chat sidebar, the structured-output panel and the composer](./docs/screenshot.png)
+
+The empty state is also the tour: ask for the weather to get a tool card, draft an
+email to hit the approval gate, or describe a goal to stream a structured plan.
+
 ---
 
 ## Why this project exists
@@ -139,6 +144,7 @@ prerendering.
 ```
 ai-workbench/
 ├── .github/workflows/     # CI: checks, E2E, evals
+├── docs/                  # README assets (screenshot)
 ├── public/                # favicon set + robots.txt
 ├── server/
 │   ├── index.ts           # Real model + telemetry + port; entry point
