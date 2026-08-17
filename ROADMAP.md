@@ -341,6 +341,18 @@ the build. Two things to remember when it happens — the rate limiter is
 per-process, so more than one API instance needs a shared store behind the same
 `consume`; and add the three origin-dependent SEO tags listed in README.
 
+**Conversation persistence and multi-chat.** The sidebar's folders and history
+are static (`src/components/shell/Sidebar.tsx`), and "New chat" is inert — the
+shell renders §4 of [DESIGN.md](./DESIGN.md) faithfully, but nothing behind it
+is stored. Building it means a conversation store, list state, routing and a
+storage layer: application frontend work that touches neither `server/` nor
+`src/domain/`, and that demonstrates none of the six practices this lab exists
+to exercise. The one place it would help is observability, where a Langfuse
+session currently means one page load rather than one thread — `sessionId` is a
+`crypto.randomUUID()` created in `src/App.tsx` and sent with every message. That
+grouping already works end to end; multi-chat would make it finer, not enable
+it.
+
 **Dark mode, the user bubble's line clamp, and per-token syntax highlighting.**
 Recorded in [DESIGN.md](./DESIGN.md) §12 with reasons. Dark mode was out of
 scope in §10 from the start; because every colour goes through a semantic token
