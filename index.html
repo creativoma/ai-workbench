@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <title>AI Workbench — streaming chat, tool calling and evals</title>
+        <meta
+            name="description"
+            content="A frontend-first AI engineering lab: streaming chat, typed tool calling, human-in-the-loop approvals, structured outputs, Langfuse tracing and scored evals."
+        />
+
+        <meta name="robots" content="index, follow" />
+        <!-- DESIGN.md §10: light-only, so browsers must not force-darken it. -->
+        <meta name="color-scheme" content="light" />
+        <meta name="theme-color" content="#ffffff" />
+
+        <!-- SVG for browsers that take it, PNG for the ones that still don't,
+             and a 180px PNG because iOS ignores SVG for home-screen icons. -->
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="/favicon-32.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="/apple-touch-icon.png"
+        />
+
+        <!-- og:url, og:image and rel=canonical are deliberately absent: they
+             require an absolute origin this app does not have yet. See the SEO
+             section in README.md for the three tags to add at deploy time. -->
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="AI Workbench" />
+        <meta property="og:title" content="AI Workbench" />
+        <meta
+            property="og:description"
+            content="A frontend-first AI engineering lab: streaming chat, tool calling, human-in-the-loop agents, structured outputs, observability and evals."
+        />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="AI Workbench" />
+        <meta
+            name="twitter:description"
+            content="A frontend-first AI engineering lab: streaming chat, tool calling, human-in-the-loop agents, structured outputs, observability and evals."
+        />
+    </head>
+    <body>
+        <div id="root"></div>
+        <script type="module" src="/src/main.tsx"></script>
+    </body>
+</html>

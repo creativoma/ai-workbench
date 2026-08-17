@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="AI Workbench">
+    <rect width="32" height="32" rx="8" fill="#F0511E" />
+    <rect
+        x="10"
+        y="10"
+        width="12"
+        height="12"
+        rx="2"
+        fill="#FFFFFF"
+        fill-opacity="0.92"
+        transform="rotate(45 16 16)"
+    />
+</svg>

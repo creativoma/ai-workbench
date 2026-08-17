@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# The model endpoints are not content — keep them out of the index.
+Disallow: /api/
+
+# Add once the app has a public origin:
+# Sitemap: https://<your-domain>/sitemap.xml
