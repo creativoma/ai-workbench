@@ -1,0 +1,4 @@
+[test]
+# `bun test` cannot run this suite (no jsdom, no `vi`). The guard explains that
+# and exits instead of letting every component test fail confusingly.
+preload = ["./scripts/bun-runner-guard.ts"]

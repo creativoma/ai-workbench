@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.e2e.tsbuildinfo",
+        "target": "es2023",
+        /* Specs run in Node, but `page.evaluate` callbacks run in the browser,
+           so this project needs DOM globals — which server code must not get. */
+        "lib": ["ES2023", "DOM"],
+        "types": ["node"],
+        "skipLibCheck": true,
+
+        "module": "preserve",
+        "moduleResolution": "bundler",
+        "allowImportingTsExtensions": true,
+        "verbatimModuleSyntax": true,
+        "moduleDetection": "force",
+        "noEmit": true,
+
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "erasableSyntaxOnly": true,
+        "noFallthroughCasesInSwitch": true
+    },
+    "include": ["e2e", "playwright.config.ts"]
+}
